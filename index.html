@@ -1306,7 +1306,7 @@ footer{border-top:1px solid var(--border); padding:64px 0 24px; background:var(-
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Rajib Khan. All Rights Reserved. Crafted with Passion & Precision.</span>
+      <span>© 2026 RK. Engineered with full LocalStorage CMS integration.</span>
       <button class="back-to-top" id="back-to-top-btn">Back to top ↑</button>
     </div>
   </div>
@@ -1450,13 +1450,13 @@ const timeline = [
  ---------------------------------------------------------------------------------------------------- */
 ];
 const dockSocials = [
- {key:'in',name:'LinkedIn',url:'https://linkedin.com/in/rajibkhanshuvo'},
  {key:'GH',name:'GitHub',url:'https://github.com/rajibkhanshuvo'},
- //{key:'Pa',name:'Patreon',url:'https://patreon.com/rajibkhanshuvo'},
- {key:'Be',name:'Behance',url:'https://behance.net/rajibkhanshuvo'},
+ {key:'in',name:'LinkedIn',url:'https://linkedin.com/in/rajibkhanshuvo'},
+ {key:'IG',name:'Instagram',url:'https://instagram.com/rajib_khan_shuvo'},
+ {key:'Pa',name:'Patreon',url:'https://patreon.com/rajibkhanshuvo'},
  {key:'Dr',name:'Dribbble',url:'https://dribbble.com/rajibkhanshuvo'},
- {key:'Fi',name:'Fiverr',url:'https://fiverr.com/rajib_k'},
- {key:'IG',name:'Instagram',url:'https://instagram.com/rajib_khan_shuvo'}
+ {key:'Be',name:'Behance',url:'https://behance.net/rajibkhanshuvo'},
+ {key:'Fi',name:'Fiverr',url:'https://fiverr.com/rajib_k'}
 ];
 const contactSocials = [
  {key:'GH',name:'GitHub',handle:'@rajibkhanshuvo',url:'https://github.com/rajibkhanshuvo'},
@@ -1870,20 +1870,20 @@ function renderSkills(){
 /* ================= SERVICES PAGE RENDER ================= */
 const spotlightServices = [
  {key:'wp', bg:'light', eyebrow:'Comprehensive WordPress Development', title:'Bespoke WordPress Development',
-  desc:'Avoid slow, insecure builds. I engineer custom WordPress ecosystems that scale with your specific business requirements.',
+  desc:'I engineer scalable, flexible, and high-performance WordPress solutions tailored to your business needs. From custom page-builder experiences to advanced content architecture, every build is designed for functionality, flexibility, and long-term growth.',
   tabs:[
-    {label:'Elementor Website Development', heading:'Elementor Website Development', desc:'Clean, scalable page-builder websites tuned for editing speed and long-term maintainability.', badge:'Custom WordPress Development', deliverables:['Custom Elementor widgets','Fully responsive layouts','Fast loading & GTM setup','Membership & login portals','SEO-friendly URL structure','Aesthetic custom sections']},
-    {label:'WooCommerce Integration', heading:'WooCommerce Integration', desc:'Full commerce backends with custom checkout flows, product logic, and payment gateway wiring.', badge:'E-Commerce Systems', deliverables:['Custom checkout flows','Payment gateway setup','Product variation logic','Inventory sync','Abandoned cart recovery','Tax & shipping rules']},
-    {label:'Custom Post Types', heading:'Custom Post Types & ACF', desc:'Structured content models tailored to how your team actually manages information.', badge:'Content Architecture', deliverables:['Custom field groups','Repeatable content blocks','Relationship fields','Custom taxonomies','Editor-friendly UI','Data validation rules']},
-    {label:'Performance Optimization', heading:'WordPress Performance Optimization', desc:'Bloat removal, caching layers, and database tuning to hit 95+ PageSpeed scores.', badge:'Speed Engineering', deliverables:['Database query cleanup','Image & asset compression','Caching layer setup','Plugin audit & removal','Lazy-load implementation','Core Web Vitals fixes']}
+    {label:'Elementor Website Development', heading:'Elementor Website Development', desc:'Crafting visually engaging, fully responsive WordPress websites with Elementor and Elementor Pro. Clean layouts, reusable components, and flexible editing experiences built around your brand and business goals.', badge:'Custom WordPress Development', deliverables:['Custom Elementor widgets & sections','Elementor Pro theme builder setup','Fully responsive website layouts','Dynamic content integration','Custom headers, footers & templates','Reusable design systems']},
+    {label:'WooCommerce Integration', heading:'WooCommerce Integration', desc:'Transform your WordPress website into a powerful online store with tailored shopping experiences, seamless checkout flows, and advanced e-commerce functionality designed to support business growth.', badge:'E-Commerce Systems', deliverables:['Custom WooCommerce store setup','Product & shop page customization','Advanced product variation logic','Payment gateway integration','Cart, checkout & account customization','Shipping & inventory configuration']},
+    {label:'Custom Post Types & ACF', heading:'Custom Post Types & ACF', desc:'Build structured, dynamic content systems with Advanced Custom Fields and custom post types. Make complex website content easier to manage through organized data structures and intuitive admin experiences.', badge:'Content Architecture', deliverables:['Custom post type development','Advanced Custom Fields integration','Custom field groups & relationships','Dynamic templates & content layouts','Custom taxonomies & filtering','User-friendly content management']},
+    {label:'WordPress Performance Optimization', heading:'WordPress Performance Optimization', desc:'Optimize your WordPress architecture for faster loading and smoother performance. From database cleanup to caching strategies, every improvement focuses on creating a lightweight and efficient website.', badge:'Speed Engineering', deliverables:['Database query optimization','Advanced caching configuration','Image & asset optimization','Plugin & theme performance audit','Lazy-loading implementation','Core Web Vitals improvements']}
   ]},
  {key:'opt', bg:'dark', eyebrow:'Automation & Defense', title:'Website Optimization & Protection',
-  desc:'Protect and accelerate your online asset. Proactive maintenance ensures optimal SEO indexability and bulletproof security.',
+  desc:'Protect, optimize, and maintain your digital assets with proactive website engineering. From technical SEO and performance diagnostics to malware removal and secure hosting migration, I help keep your website fast, discoverable, and reliable.',
   tabs:[
-    {label:'Speed Audit', heading:'Website Speed Optimization', desc:'Long-term diagnostics and load-time engineering for every major device and connection type.', badge:'Core Web Vitals', deliverables:['Full PageSpeed & CWV audit','Automated WebP conversion','Advanced browser & server caching','CDN edge distribution setup','Render-blocking script removal','Continuous performance monitoring']},
-    {label:'SEO Structuring', heading:'Technical SEO Structuring', desc:'Schema, crawlability and indexation work that compounds organic visibility over time.', badge:'Search Visibility', deliverables:['JSON-LD schema markup','XML sitemap & robots.txt','Canonical URL management','Internal link architecture','Meta title & description audit','Search Console integration']},
-    {label:'Malware Removal', heading:'Malware Removal & Hardening', desc:'Full-site scanning, infection removal, and hardened access controls to keep threats out.', badge:'Security Response', deliverables:['Full malware scan & removal','Firewall rule configuration','Admin access hardening','File integrity monitoring','Two-factor login setup','Post-cleanup verification']},
-    {label:'Hosting Migration', heading:'Zero-Downtime Hosting Migration', desc:'Domain, database, and hosting migrations executed with no visitor-facing downtime.', badge:'Infrastructure', deliverables:['Full site & database backup','DNS & domain transfer','Zero-downtime cutover','SSL certificate setup','Post-migration QA testing','Rollback safety plan']}
+    {label:'Speed Audit', heading:'Website Speed Optimization', desc:'Identify performance bottlenecks and eliminate unnecessary overhead through detailed diagnostics and targeted optimization. Improve loading speed, responsiveness, and overall website performance across devices.', badge:'Core Web Vitals', deliverables:['Full PageSpeed Insights & audit','Advanced browser & server caching','Render-blocking resource optimization','Automated WebP image conversion','CDN integration & configuration','Performance monitoring & testing']},
+    {label:'SEO Structuring', heading:'Technical SEO Structuring', desc:'Build a search-engine-friendly website foundation with structured data, crawlability improvements, and optimized site architecture. Help search engines understand your content and discover your website more efficiently.', badge:'Search Visibility', deliverables:['JSON-LD schema markup','XML sitemap & robots.txt configuration','Canonical URL management','Internal linking architecture','Meta title & description optimization','Google Search Console integration']},
+    {label:'Malware Removal', heading:'Malware Removal & Hardening', desc:'Recover compromised websites through systematic malware detection, infection cleanup, and security hardening. Strengthen website protection with improved access controls and preventive security measures.', badge:'Security Response', deliverables:['Full website malware scanning & removal','Malicious code & file cleanup','WordPress admin access hardening','Firewall & security configuration','Two-factor authentication setup','Post-cleanup security verification']},
+    {label:'Hosting Migration', heading:'Zero-Downtime Hosting Migration', desc:'Move your website to a better hosting environment without compromising your data or user experience. Carefully handle website files, databases, domains, and server configurations for a smooth transition.', badge:'Infrastructure', deliverables:['Complete website & database backup','Hosting & server migration','DNS & domain configuration','SSL certificate installation','Database & file transfer','Post-migration QA & verification']}
   ]}
 ];
 let spotlightActiveTab = [0,0];
