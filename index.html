@@ -1312,7 +1312,7 @@ footer{border-top:1px solid var(--border); padding:64px 0 24px; background:var(-
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 RK. Engineered with full LocalStorage CMS integration.</span>
+      <span>© 2026 Rajib Khan. All Rights Reserved. Crafted with Passion & Precision.</span>
       <button class="back-to-top" id="back-to-top-btn">Back to top ↑</button>
     </div>
   </div>
@@ -1464,7 +1464,6 @@ const dockSocials = [
  {key:'IG',name:'Instagram',url:'https://instagram.com/rajib_khan_shuvo'},
  {key:'Fi',name:'Fiverr',url:'https://fiverr.com/rajib_k'}
 ];
-
 const contactSocials = [
  {key:'GH',name:'GitHub',handle:'@rajibkhanshuvo',url:'https://github.com/rajibkhanshuvo'},
  {key:'in',name:'LinkedIn',handle:'in/rajibkhanshuvo',url:'https://linkedin.com/in/rajibkhanshuvo'},
@@ -1513,14 +1512,20 @@ async function sendToBackend(payload){
   // 3) honeypot + fill-time (bots fill hidden fields and submit instantly)
   payload.hp = [...document.querySelectorAll('.hp-field')].map(i=>i.value).join('').trim();
   const modalOpen = document.getElementById('modal-overlay').classList.contains('open');
-  payload.elapsed = Date.now() - (modalOpen ? lastFormOpenAt : PAGE_LOADED_AT);
-  try{ localStorage.setItem('rk_last_submit', String(Date.now())); }catch(e){}
+  const startedAt = modalOpen ? lastFormOpenAt : PAGE_LOADED_AT;
+  // FIX: the Google Script silently ignores forms sent < 2.5 s after opening (bot check).
+  // Real visitors using browser autofill can be that fast → wait the remaining moment so no message is lost.
+  const MIN_FILL_MS = 3000;
+  if(Date.now() - startedAt < MIN_FILL_MS) await new Promise(r=>setTimeout(r, MIN_FILL_MS - (Date.now() - startedAt)));
+  payload.elapsed = Date.now() - startedAt;
   saveLeadLocal(payload);
+  // FIX: cooldown starts only after a successful send (a failed send no longer blocks a retry)
+  const markSent = res=>{ if(res && res.ok){ try{ localStorage.setItem('rk_last_submit', String(Date.now())); }catch(e){} } return res; };
   try{
     if(INTEGRATIONS.GOOGLE_SCRIPT_URL){
       const r = await fetch(INTEGRATIONS.GOOGLE_SCRIPT_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)});
       const j = await r.json();
-      return Object.assign({via:'google'}, j);
+      return markSent(Object.assign({via:'google'}, j));
     }
     if(INTEGRATIONS.BACKUP_EMAIL){
       const body = {
@@ -1536,9 +1541,9 @@ async function sendToBackend(payload){
       const r = await fetch('https://formsubmit.co/ajax/'+encodeURIComponent(INTEGRATIONS.BACKUP_EMAIL), {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(body)});
       const j = await r.json();
       const activation = /activat/i.test(j.message||'');
-      return {ok:String(j.success)==='true' || activation, via:'email', activation, message:j.message||''};
+      return markSent({ok:String(j.success)==='true' || activation, via:'email', activation, message:j.message||''});
     }
-    return {ok:true, via:'local'};
+    return markSent({ok:true, via:'local'});
   }catch(e){ return {ok:false, error:'network', message:e.message}; }
 }
 async function fetchBusySlots(date){
@@ -1811,6 +1816,7 @@ async function submitQuickMessage(){
   if(name.length<2 || !message){ showToast('Please add your name and a message'); return; }
   const btn = document.querySelector('#modal-box .btn-primary'); if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
   const res = await sendToBackend({id:Date.now(), type:'message', name, email, service:'Quick Message', budget:'-', timeline:'-', message, timestamp:new Date().toISOString(), status:'unread'});
+  if(isUserError(res)){ showToast(res.message); playSound('failure'); if(btn){ btn.disabled = false; btn.textContent = 'Send Message'; } return; }
   closeModal();
   if(res.ok){ showToast('Message sent — thank you!'); playSound('success'); }
   else { showToast(failText(res, 'Saved — but sending failed. Please email rajibkhans789@gmail.com')); playSound('failure'); }
@@ -1905,7 +1911,7 @@ function renderSpotlights(){
           <h3 style="font-size:22px; ${s.bg==='dark'?'color:#fff;':''}">${s.title}</h3>
           <p style="max-width:560px; margin-top:10px; font-size:14px; ${s.bg==='dark'?'color:oklch(1 0 0/70%);':'color:var(--text-dim);'}">${s.desc}</p>
         </div>
-        <button class="btn ${s.bg==='dark'?'btn-hire':'btn-primary'} btn-sm" onclick="openEstimateModal('${s.title.replace(/'/g,"")}')">Request Estimate →</button>
+        <button class="btn ${s.bg==='dark'?'btn-hire':'btn-primary'} btn-sm" onclick="openEstimateModal('${s.title.replace(/'/g,"")}', '', '${active.label.replace(/'/g,"")}')">Request Estimate →</button>
       </div>
       <div class="spotlight-tabs">
         ${s.tabs.map((t,ti)=>`<div class="spotlight-tab ${ti===spotlightActiveTab[si]?'active':''}" data-si="${si}" data-ti="${ti}">${t.label}</div>`).join('')}
@@ -2056,7 +2062,8 @@ async function submitConsultBooking(when){
 }
 
 /* ---- Generic Estimate / Request popup modal (sends via INTEGRATIONS → email) ---- */
-function openEstimateModal(serviceName, prefillNote){
+function openEstimateModal(serviceName, prefillNote, option){
+  const sendAs = option ? serviceName + ' — ' + option : serviceName; // email shows which tab/option was selected
   const html = `
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="eyebrow">Request Estimate</div>
@@ -2068,7 +2075,7 @@ function openEstimateModal(serviceName, prefillNote){
       ${budgetPickerHTML('est-budget', '')}
     </div>
     <div class="field"><label>Project Details</label><textarea rows="4" id="est-message">${prefillNote||''}</textarea></div>
-    <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="submitEstimateForm('${serviceName.replace(/'/g,"")}')">Send Request</button>
+    <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="submitEstimateForm('${sendAs.replace(/'/g,"")}')">Send Request</button>
   `;
   openModal(html);
   bindBudgetPicker(document.getElementById('est-budget'));
@@ -2082,6 +2089,7 @@ async function submitEstimateForm(serviceName){
   const payload = {id:Date.now(), type:'message', name, email, service:serviceName, budget, timeline:'-', message, timestamp:new Date().toISOString(), status:'unread'};
   const btn = document.querySelector('#modal-box .btn-primary'); if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
   const res = await sendToBackend(payload);
+  if(isUserError(res)){ showToast(res.message); playSound('failure'); if(btn){ btn.disabled = false; btn.textContent = 'Send Request'; } return; }
   closeModal();
   if(res.ok){ showToast('Request sent — I will follow up shortly!'); playSound('success'); }
   else { showToast(failText(res, 'Saved — but sending failed. Please email rajibkhans789@gmail.com')); playSound('failure'); }
