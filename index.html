@@ -871,6 +871,12 @@ footer{border-top:1px solid var(--border); padding:64px 0 24px; background:var(-
 .footer-social-row a[data-net]:hover, .footer-social-row a[data-net]:focus-visible, .footer-social-row a[data-net]:active{
   background:var(--brand-bg, var(--brand)); border-color:var(--brand); color:#fff; transform:translateY(-3px); box-shadow:0 8px 18px -8px var(--brand); outline:none;}
 [data-theme="dark"] .footer-social-row a[data-net="GH"]:hover, [data-theme="dark"] .footer-social-row a[data-net="GH"]:focus-visible, [data-theme="dark"] .footer-social-row a[data-net="GH"]:active{background:#f0f6fc; border-color:#f0f6fc; color:#0d1117;}
+
+/* ===== NEW: square buttons with a slightly rounded border (all text buttons) ===== */
+:root{ --btn-radius:8px; }
+.btn, .chip, .tab, .call-chip, .footer-links-grid a.footer-sched-link, .proj-btn-row button, .slot-btn,
+.spotlight-tab, .launcher, .topic-btn, .sched-pick, .page-btn, .quiz-opt{border-radius:var(--btn-radius);}
+.copy-btn{border-radius:6px;}
 </style>
 </head>
 <body>
@@ -1458,6 +1464,7 @@ const dockSocials = [
  {key:'IG',name:'Instagram',url:'https://instagram.com/rajib_khan_shuvo'},
  {key:'Fi',name:'Fiverr',url:'https://fiverr.com/rajib_k'}
 ];
+
 const contactSocials = [
  {key:'GH',name:'GitHub',handle:'@rajibkhanshuvo',url:'https://github.com/rajibkhanshuvo'},
  {key:'in',name:'LinkedIn',handle:'in/rajibkhanshuvo',url:'https://linkedin.com/in/rajibkhanshuvo'},
